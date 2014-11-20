@@ -77,7 +77,7 @@ molten_data = melt(data_extract, id.var=c("Subject", "Activity"))
 averages = dcast(molten_data, Subject + Activity ~ variable, mean)
 
 ## Create a text file with the resuting data set
-write.table(averages, file="C:/Users/Maureen/Documents/Coursera/tidy_data.txt", row.names = FALSE, quote = FALSE)
+write.table(averages, file="C:/Users/Maureen/Documents/Coursera/tidy_data.txt",  sep="\t", row.names = FALSE, quote = FALSE)
 
 ## Remove working files
 rm(averages, molten_data, data_extract, one_data_set, subject, label)
