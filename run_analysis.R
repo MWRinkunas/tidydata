@@ -37,11 +37,10 @@ features <- gsub("\\(\\)", "", features)
 
 ## Merge the training and test subjects
 subject <-rbind(subject_test, subject_train)
-colnames(subject) <- "subject"
+colnames(subject) <- "Subject"
 
 ## Merge the training and test labels
 activity <- rbind(y_test, y_train)
-colnames(activity) <- "activity"
 
 ## Decode the activity labels
 activity <- merge (activity, activity_labels, by=1)[,2]
@@ -54,12 +53,13 @@ colnames(data_merge) <- features
 one_data_set <- cbind(subject, activity, data_merge)
 
 ## Label the data set with more descriptive variables names
+names(one_data_set) <- gsub("activity", "Activity", names(one_data_set))
 names(one_data_set) <- gsub("^t", "Time", names(one_data_set))
 names(one_data_set) <- gsub("^f", "Frequency", names(one_data_set))
 names(one_data_set) <- gsub("Acc", "Accelerometer", names(one_data_set))
 names(one_data_set) <- gsub("Gyro", "Gyrometer", names(one_data_set))
 names(one_data_set) <- gsub("Mag", "Magnitude", names(one_data_set))
-names(one_data_set) <- gsub("mean", "Mean", names(one_data_set))
+names(one_data_set) <- gsub("mean", "Mean",  names(one_data_set))
 names(one_data_set) <- gsub("std", "Standard Deviation", names(one_data_set))
 
 ## Remove working files
@@ -71,10 +71,10 @@ search <- grep("-Mean-|-Mean$|Standard Deviation", colnames(one_data_set))
 data_extract <- one_data_set[,c(1,2,search)]
 
 ## Convert dataset into a molten data frame
-molten_data = melt(data_extract, id.var=c("subject", "activity"))
+molten_data = melt(data_extract, id.var=c("Subject", "Activity"))
 
 ## Compute the average of each variable for each activity and each subject
-averages = dcast(molten_data, subject + activity ~ variable, mean)
+averages = dcast(molten_data, Subject + Activity ~ variable, mean)
 
 ## Create a text file with the resuting data set
 write.table(averages, file="C:/Users/Maureen/Documents/Coursera/tidy_data.txt", row.names = FALSE, quote = FALSE)
