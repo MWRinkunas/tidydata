@@ -40,17 +40,18 @@ subject <-rbind(subject_test, subject_train)
 colnames(subject) <- "subject"
 
 ## Merge the training and test labels
-label <- rbind(y_test, y_train)
+activity <- rbind(y_test, y_train)
+colnames(activity) <- "activity"
 
 ## Decode the activity labels
-label <- merge (label, activity_labels, by=1)[,2]
+activity <- merge (activity, activity_labels, by=1)[,2]
 
 ## Merge the training and test datasets
 data_merge <- rbind(x_test, x_train)
 colnames(data_merge) <- features
 
 ## Merge the subjects, labels and data
-one_data_set <- cbind(subject, label, data_merge)
+one_data_set <- cbind(subject, activity, data_merge)
 
 ## Label the data set with more descriptive variables names
 names(one_data_set) <- gsub("^t", "Time", names(one_data_set))
@@ -62,7 +63,7 @@ names(one_data_set) <- gsub("mean", "Mean", names(one_data_set))
 names(one_data_set) <- gsub("std", "Standard Deviation", names(one_data_set))
 
 ## Remove working files
- rm(subject_train, subject_test, y_train, y_test, x_train, x_test, data_merge, features)
+rm(subject_train, subject_test, y_train, y_test, x_train, x_test, data_merge, features)
 
 ## Extract only the measurements on the mean and standard deviation for each measurement
 ## Match columns whose name contains "Standard Deviation" or "-mean-" or ends with "-mean"
@@ -70,10 +71,10 @@ search <- grep("-Mean-|-Mean$|Standard Deviation", colnames(one_data_set))
 data_extract <- one_data_set[,c(1,2,search)]
 
 ## Convert dataset into a molten data frame
-molten_data = melt(data_extract, id.var=c("subject", "label"))
+molten_data = melt(data_extract, id.var=c("subject", "activity"))
 
 ## Compute the average of each variable for each activity and each subject
-averages = dcast(molten_data, subject + label ~ variable, mean)
+averages = dcast(molten_data, subject + activity ~ variable, mean)
 
 ## Create a text file with the resuting data set
 write.table(averages, file="C:/Users/Maureen/Documents/Coursera/tidy_data.txt", row.names = FALSE, quote = FALSE)
