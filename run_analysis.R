@@ -52,7 +52,7 @@ colnames(data_merge) <- features
 ## Merge the subjects, labels and data
 one_data_set <- cbind(subject, activity, data_merge)
 
-## Label the data set with more descriptive variables names
+## Clean up the headers
 names(one_data_set) <- gsub("activity", "Activity", names(one_data_set))
 names(one_data_set) <- gsub("^t", "Time", names(one_data_set))
 names(one_data_set) <- gsub("^f", "Frequency", names(one_data_set))
