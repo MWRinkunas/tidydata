@@ -13,6 +13,9 @@ For each record it is provided:
 - Its activity label. 
 - An identifier of the subject who carried out the experiment.
 
+The Run_Analysis.R Script performs the following transformations to the data:
+======================================
+
 The output from Run_Analysis.R script contains the following variables:
 - Subject: An integer identifying a single test subject. There are 30 subjects in total.
 - Activity: A factor identify the type of activity the measurements were derived from. Possible values are: WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING and LAYING.
