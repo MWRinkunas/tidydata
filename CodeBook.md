@@ -1,10 +1,9 @@
 Code Book for Run_Analysis.R
 ===============================
 
-The original data set is the Human Activity Recognition Using Smartphones Dataset (Version 1.0) built from the recordings of 30 subjects performing activities of daily living (ADL) while carrying a waist-mounted smartphone with embedded inertial sensors.
-It can be found at: http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones 
+The original data set is the Human Activity Recognition Using Smartphones Dataset (Version 1.0) built from the recordings of 30 subjects performing activities of daily living (ADL) while carrying a waist-mounted smartphone with embedded inertial sensors. It can be found at: http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones 
 
-For each record it is provided:
+Each record in the original data set contains:
 ======================================
 
 - Triaxial acceleration from the accelerometer (total acceleration) and the estimated body acceleration.
@@ -15,8 +14,22 @@ For each record it is provided:
 
 The Run_Analysis.R Script performs the following transformations to the data:
 ======================================
+- Once the data sets are loaded, the features list is cleaned up.
+- The subject and label lists for training and test data sts are merged.
+- Activity labels are then decoded by merging the label and ativity label data.
+- The training and test sets of sensor recordings are merged.
+- The subject, activity labels, and sensor recordings are then merged into one data set.
+- Clean up is done to remove abbreviations from the header data.
+- Only those columns that have standard deviation or mean measurements are extracted
+  by matching columns that contain "Standard Deviation" or "Mean" in the header.
+- The data set is converted into a molten data frame to make it easier for casting.
+  The identifier variables are subject and activity which signify the unit that measurements take place on.
+- The molten data is reshaped into a data frame, and the average of each variable for each activity and each 
+  subject is computed.
+- A text file is then created with the resulting data set.
 
 The output from Run_Analysis.R script contains the following variables:
+======================================
 - Subject: An integer identifying a single test subject. There are 30 subjects in total.
 - Activity: A factor identify the type of activity the measurements were derived from. Possible values are: WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING and LAYING.
 - TimeBodyAccelerometer-Mean-X: mean linear acceleration of the body in the x coordinate
